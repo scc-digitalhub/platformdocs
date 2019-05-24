@@ -1,6 +1,6 @@
-**************************
+***********************************
 Digital Hub Platform Documentation
-**************************
+***********************************
 
 .. toctree::
    :maxdepth: 2
@@ -10,5 +10,7 @@ Digital Hub Platform Documentation
    docs/servicehub
    docs/datahub
    docs/iot
+   docs/vis
+   docs/community
 
    docs/installation

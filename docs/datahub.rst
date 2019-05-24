@@ -22,3 +22,11 @@ Data Processing and Analysis
 
 .. toctree::
   data/jupyter
+
+Data Interfaces
+----------------- 
+.. toctree::
+  data/dss
+  data/geoserver
+
+  
