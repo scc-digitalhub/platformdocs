@@ -1,5 +1,6 @@
+************************
 Digital Hub Architecture
-========================
+************************
 
 The goal of the Digital Hub platform is to address the following requirements:
 
@@ -44,7 +45,7 @@ Furthermore, non-functional requirements concerning the Digital Hub platform ref
 * Enable re-use of the platform and its components through an **open source** paradigm.
 
 Logical View
-------------
+==============
 
 The logical architecture of the DigitalHub platform is represented in the following diagram. In this architecture 
 the fundamental elements are organized in two layers, in particular Service Layer (Service Hub) and Data Layer (Data Hub). 
@@ -61,8 +62,9 @@ with external reference systems, such as `DAF <https://docs.italia.it/italia/pia
 
 .. image:: assets/dh_arch_logica.png
 
-DATA HUB
-^^^^^^^^^
+Data Hub
+-----------
+
 Data Layer consists of a set of tools that are necessary for the extraction, processing, aggregation, census, 
 and representation of data in an open and standardized manner. In particular, these tools are structured as:
 
@@ -107,8 +109,8 @@ Service Hub and also to external tools for visualization or for use by the commu
 The latter, in particular, occurs through the data catalog which is used to expose the Open, Semi-open, and also Closed Data  
 to third parties in a protected manner.
 
-SERVICE HUB
-^^^^^^^^^^^^
+Service Hub
+------------
 
 Service Hub offers the tools to publish, manage, and govern the services (API) exposed by the domain 
 and / or by the components of the platform in a protected and safe way. For this the tools are organized in
@@ -132,14 +134,16 @@ and / or by the components of the platform in a protected and safe way. For this
   be directly used by the various applications.
 
 Key Concepts and Characteristics
--------------
+=================================
+
 To describe the various components of the platform, it is important to define some common features that each component 
 must have to be an integral part of the same platform and its deployment and use model. These features refer 
 to the interoperability model, organizational and multi-tenancy model, security, access control, and code 
 distribution model.
 
 Interopeability and Protocols
-^^^^^^^^^^^^^^
+------------------------------
+
 Use of standard protocols at all possible levels of the platform is a fundamental requirement to guarantee 
 extensibility and to avoid "vendor lock-in" of a solution that must be generic, customizable, and easy to integrate.
 
@@ -179,7 +183,7 @@ such as
   API model for interoperable banking services.
 
 Multitenancy and Organizational Model
-^^^^^^^^^^^
+---------------------------------------
 
 Multi-tenancy is a necessary requirement for exposure and use of the platform in Software-as-a-Service mode 
 when multiple organizations and users use the components and features of the platform without having access 
@@ -220,7 +224,7 @@ the concept of tenant (space) and allow to form a hierarchy of tenants. So a rol
 - role: the specific role for the context (eg, "API Publisher" role in the API Management context).
 
 Deployment Model
-^^^^^^^^^^^^^
+------------------
 
 The platform is implemented as a set of software components (Open Source projects adopted or components 
 implemented ad-hoc) that are brought together in order to solve common problems and to address the specified
