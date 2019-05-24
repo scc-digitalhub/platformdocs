@@ -2,22 +2,23 @@ Data Hub
 ===========
 
 Overview 
-----------
+---------------
 
 Data Wrangling
-----------
-
-data/nifi
+---------------
+.. toctree::
+  data/nifi
 
 Data Management
 ---------------
-
-data/rm
-data/ds
-data/dremio
-data/sql
+.. toctree::
+  data/rm
+  data/ds
+  data/dremio
+  data/sqlpad
 
 Data Processing and Analysis
----------------------------
+-----------------------------
 
-data/jupyter
+.. toctree::
+  data/jupyter
