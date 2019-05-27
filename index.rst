@@ -14,3 +14,5 @@ Digital Hub Platform Documentation
    docs/community
 
    docs/installation
+
+   docs/roadmap

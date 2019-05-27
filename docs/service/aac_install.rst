@@ -1,5 +1,5 @@
 Configuration and Installation
-----------------
+------------------------------
 
 Installation Requirements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

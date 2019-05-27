@@ -45,7 +45,7 @@ the authentication should be performed again. In a nutshell, the flow is realize
 * If the user accepts, the browser is redirected to the specified redirect URL, attaching the token data in the 
   url hash part: ::
   
-  http://www.example.com#access\_token=025a90d4-d4dd-4d90-8354-779415c0c6d8&token\_type=Bearer&expires\_in=3600
+    http://www.example.com#access\_token=025a90d4-d4dd-4d90-8354-779415c0c6d8&token\_type=Bearer&expires\_in=3600
 
 * Use the obtained token to obtain user data using the AAC API: ::
 
