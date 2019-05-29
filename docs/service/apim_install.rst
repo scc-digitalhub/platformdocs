@@ -34,7 +34,7 @@ Replace the default H2 db with mysql
 		  - FLUSH PRIVILEGES;
 		  - quit;
 
-	* copy mysql connector (i.e. mysql-connector-java-*-bin.jar) into repository/components/lib, downloadable from https://dev.mysql.com/downloads/connector/j
+	* copy mysql connector (i.e. mysql-connector-java-__-bin.jar) into repository/components/lib, downloadable from https://dev.mysql.com/downloads/connector/j
 	* edit /repository/conf/datasources/master-datasources.xml
 	
 		* for the datasources **WSO2_CARBON_DB** and **WSO2AM_DB**, make these changes: ::
@@ -44,7 +44,7 @@ Replace the default H2 db with mysql
 		  <password>regadmin</password>
 		  <driverClassName>com.mysql.jdbc.Driver</driverClassName> 
 
-		* launch the following scripts (for MySQL 5.7 use versions *.5.7.sql)::
+		* launch the following scripts (for MySQL 5.7 use versions __.5.7.sql)::
 		
 			  mysql -u regadmin -p -Dregdb < dbscripts/mysql.sql
 			  mysql -u regadmin -p -Dregdb < dbscripts/apimgt/mysql.sql
@@ -118,19 +118,19 @@ Clone the project that contains the AAC connector and WSO2 custom theme: https:/
 Import and add WSO2 certificate to the default keystore.
 
 Linux
-	* sudo rm -f cert.pem && sudo echo -n | openssl s_client -connect localhost:9443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ./cert.pem
-	* sudo keytool -import -trustcacerts -file cert.pem -alias root -keystore JAVA_HOME/jre/lib/security/cacerts
+	* ``sudo rm`` -f cert.pem && sudo echo -n | ``openssl`` s_client -connect localhost:9443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ./cert.pem
+	* ``sudo keytool`` -import -trustcacerts -file cert.pem -alias root -keystore JAVA_HOME/jre/lib/security/cacerts
 
 Windows
-	* keytool -importkeystore -srckeystore <<wso2_root>>/repository/resources/security/wso2carbon.jks -destkeystore wso2.p12 -srcstoretype jks -deststoretype pkcs12 -alias wso2carbon -destkeypass 123456 
+	* ``keytool`` -importkeystore -srckeystore <<wso2_root>>/repository/resources/security/wso2carbon.jks -destkeystore wso2.p12 -srcstoretype jks -deststoretype pkcs12 -alias wso2carbon -destkeypass 123456 
 		
 		(use a temporary password (such '123456') for destination keystore and PEM passphrase, empty password for origin and "wso2carbon" for wso2carbon password.)
 	
-	* openssl pkcs12 -in wso2.p12 -out wso2.pem
+	* ``openssl`` pkcs12 -in wso2.p12 -out wso2.pem
 	
 	* Edit wso2.pem and keep only the part between -----BEGIN CERTIFICATE----- and -----END CERTIFICATE-----
 		
-		* keytool -import -trustcacerts -file wso2.pem -alias root -keystore "%JAVA_HOME%/jre/lib/security/cacerts"
+		* ``keytool`` -import -trustcacerts -file wso2.pem -alias root -keystore "%JAVA_HOME%/jre/lib/security/cacerts"
 
 (java cacerts default password is "changeit")
 
