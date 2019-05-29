@@ -29,11 +29,14 @@ Replace the default H2 db with mysql
 	* using mysql as database ::
 	
 		  - mysql -u root -p
-		  - create database regdb character set latin1 (*);  (character set is for windows only)
+		  - create database regdb character set latin1 (*); 
 		  - GRANT ALL ON regdb.* TO regadmin@localhost IDENTIFIED BY "regadmin";
 		  - FLUSH PRIVILEGES;
 		  - quit;
 
+	.. note::
+		character set is for windows only
+	
 	* copy mysql connector (i.e. mysql-connector-java-__-bin.jar) into repository/components/lib, downloadable from https://dev.mysql.com/downloads/connector/j
 	* edit /repository/conf/datasources/master-datasources.xml
 	
@@ -123,8 +126,8 @@ Linux
 
 Windows
 	* ``keytool`` -importkeystore -srckeystore <<wso2_root>>/repository/resources/security/wso2carbon.jks -destkeystore wso2.p12 -srcstoretype jks -deststoretype pkcs12 -alias wso2carbon -destkeypass 123456 
-		
-		(use a temporary password (such '123456') for destination keystore and PEM passphrase, empty password for origin and "wso2carbon" for wso2carbon password.)
+		.. note::
+			use a temporary password (such '123456') for destination keystore and PEM passphrase, empty password for origin and "wso2carbon" for wso2carbon password.
 	
 	* ``openssl`` pkcs12 -in wso2.p12 -out wso2.pem
 	
@@ -132,9 +135,10 @@ Windows
 		
 		* ``keytool`` -import -trustcacerts -file wso2.pem -alias root -keystore "%JAVA_HOME%/jre/lib/security/cacerts"
 
-(java cacerts default password is "changeit")
-
-**BEWARE**: keytool is bugged in most java 8 versions, returning a java.util.IllegalFormatConversionException: d != java.lang.String
+.. note::
+	java cacerts default password is "changeit"
+.. warning::
+	keytool is bugged in most java 8 versions, returning a java.util.IllegalFormatConversionException: d != java.lang.String
 
 5. Proxy server configuration (Apache)
 ---------------------------------------
