@@ -1,5 +1,5 @@
 Data Services Server Installation
-========================================
+===================================
 
 WSO2 Data Services Server is based on Java OSGi technology, which allows components to be dynamically installed, started, stopped, updated, and uninstalled while eliminating component version conflicts.
 Given below are the steps you need to follow to build the product from source code:
