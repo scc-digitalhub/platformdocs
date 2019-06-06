@@ -1,6 +1,10 @@
 REST API for dataservices CRUD
 ===============================
 
+All WSO2 products expose their management functionality as admin services, which are SOAP services. 
+In this fork of DSS we have exposed OSGi-level functionalities as REST APIs.
+Having said that, it is possible to create,update,delete and read the list of dataservices through this API.
+
 1. REST API Usage
 -----------------
 
@@ -51,9 +55,6 @@ Consider the fact that you can delete a dataservice that could be placed inside 
 
 Technical implementation
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-All WSO2 products expose their management functionality as admin services, which are SOAP services. 
-| In this fork of carbon.data we have exposed OSGi-level functionalities as REST APIs via JAX-RS web application. 
-
 .. image:: ../assets/dss_rest_crud.png
 
 In order to expose a SOAP-based admin service as a REST API there are several tasks that need to be done: 

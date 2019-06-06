@@ -23,4 +23,5 @@ installed, started, stopped, updated, and uninstalled while eliminating componen
   dss_install
   dss_usage
   dss_rest_crud
+  dss_deploy
 
