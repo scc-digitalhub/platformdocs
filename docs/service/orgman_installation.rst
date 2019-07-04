@@ -36,11 +36,15 @@ In the **API Access** tab, grant all permissions under ``Basic profile service``
 
 Finally, all users that will be administrators of Org-Manager, as well as all organization owners, need the following role: ``apimanager/carbon.super:profilemanager``.
 
-To create the ``apimanager/carbon.super`` space, access the **Space Owners** menu, choose `apimanager` as **Parent Space** and click on **NEW USER**. Insert the **Username**, insert ``carbon.super`` under **New spaces** and click **ADD**. Click **UPDATE** to create this space.
+Additionally, administrators will need this one too: ``organizations:ROLE_PROVIDER``.
+
+To create the ``apimanager/carbon.super`` space, access the **Space Owners** menu, choose ``apimanager`` as **Parent Space** and click on **NEW USER**. Insert the **Username**, insert ``carbon.super`` under **New spaces** and click **ADD**. Click **UPDATE** to create this space.
 
 Now that the space has been created, all users who will be administrators of Org-Manager, or owners of an organization, need the ``profilemanager`` role within this space.
 
-Access the **User Roles** menu, pick `apimanager/carbon.super` as **Role Context**, and then, for each user, click **NEW USER**, insert the **Username**, insert ``profilemanager`` as **New role**, click **ADD** and then **UPDATE**.
+Access the **User Roles** menu, pick ``apimanager/carbon.super`` as **Role Context**, and then, for each user, click **NEW USER**, insert the **Username**, insert ``profilemanager`` as **New role**, click **ADD** and then **UPDATE**.
+
+Assign the ``organizations:ROLE_PROVIDER`` role to other administrator users in the same way as you did with the ``apimanager/carbon.super:profilemanager`` role.
 
 .. _setting-up-the-server:
 
