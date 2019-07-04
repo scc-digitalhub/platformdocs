@@ -9,7 +9,7 @@ Assuming the server is being hosted on *localhost* at port *7979*, the **Swagger
 
 Most APIs have security restrictions that require the user to be owner of the organization they are attempting to alter, or to have administrator privileges.
 
-The owner of a specific organization is defined as a user with the following role in AAC: ``components/<organization_slug>:ROLE_PROVIDER``
+The owner of a specific organization is defined as a user with the following role in AAC: ``organizations/<organization_slug>:ROLE_PROVIDER``
 
 A user has administrator privileges when the access token they are using is a client token with the ``organization.mgmt`` scope, or when they have the following role in AAC:
 ``organizations:ROLE_PROVIDER``
@@ -256,7 +256,7 @@ It is also possible, for administrators only, to grant/revoke the status of owne
 
 2. ``roles`` – Array of JSON objects representing the roles to add. Each role has 2 properties:
 
-   - ``contextSpace`` – domain of the role. It must be one of the domains registered in the organization. It should have the following structure: ``components/<component_id>/<space name>``
+   - ``contextSpace`` – domain of the role. It must be one of the domains registered in the organization. It should have the following structure: ``components/<component_id>/<tenant>``
    
    - ``role`` – Role of the user in the domain
    
