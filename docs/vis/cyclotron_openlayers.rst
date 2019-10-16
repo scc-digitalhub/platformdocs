@@ -1,1 +1,2 @@
-
+OpenLayers Widget
+=================
