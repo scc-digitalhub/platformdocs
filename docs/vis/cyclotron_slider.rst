@@ -1,7 +1,12 @@
 Time Slider Widget
 ==================
 
-The Time Slider widget wraps `noUiSlider <https://refreshless.com/nouislider/>`_ JavaScript range slider. The following table illustrates the configuration properties available (required properties are marked in **bold**).
+The Time Slider widget wraps `noUiSlider <https://refreshless.com/nouislider/>`_ JavaScript range slider.
+
+Configuration
+-------------
+
+The following table illustrates the configuration properties available (required properties are marked in **bold**).
 
 ======================= ================ ========================= ==================
 Property                JSON Key         Default                   Description
@@ -22,7 +27,7 @@ Specific Events         specificEvents                             Array of para
 ======================= ================ ========================= ==================
 
 Player
-------
+******
 
 Player property specifies an optional play/pause button that will cause the slider to slide automatically after each interval of the specified length. The button is displayed before (if horizontal) or on top of (if vertical) the slider.
 
@@ -35,7 +40,7 @@ Start On Page Ready startOnPageReady   ``false``   Start the player automaticall
 =================== ================== =========== =============
 
 Pips
-----
+****
 
 Pips are the points or scale displayed along the slider. Mode property configures the way pips are displayed:
 
@@ -58,7 +63,7 @@ Format   format     ``true``    Show pip values in the same format as slider for
 ======== ========== =========== =============
 
 Specific Events
----------------
+***************
 
 Events generated exclusively by the Slider Widget (see `Parameter-based Interaction <https://digitalhub.readthedocs.io/en/latest/docs/vis/cyclotron_parameters.html>`_). They produce a value that will be stored in the given Parameter. Note that Parameters must be defined beforehand in the Parameters section of the dashboard.
 If the slider has two handles, you can use the *Section* property to specify which handle will generate the event.
