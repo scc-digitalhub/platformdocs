@@ -72,9 +72,9 @@ The following table lists which sources are valid for each type of layer:
 +            +-----------------+------------------------+------------------------------------+
 |            | Vector          | No                     | Requires *Weight* property         |
 +------------+-----------------+------------------------+------------------------------------+
-| Vector     | Cluster         | Yes                    | Can use `Style function`_ property |
+| Vector     | Cluster         | Yes                    | Can use *`Style function`_* property |
 +            +-----------------+------------------------+------------------------------------+
-|            | Vector          | No                     | Can use `Style function`_ property |
+|            | Vector          | No                     | Can use *`Style function`_* property |
 +------------+-----------------+------------------------+------------------------------------+
 | VectorTile | VectorTile      | No                     |                                    |
 +------------+-----------------+------------------------+------------------------------------+
