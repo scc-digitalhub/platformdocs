@@ -105,7 +105,7 @@ Google Charts widget:
   }
 
 Column chart with formatter
-********************
+***************************
 
 ::
 
