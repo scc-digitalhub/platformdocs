@@ -161,7 +161,7 @@ Google Charts widget:
           "name": "Day",
           "type": "date"
       }],
-      "dataSource": "datasource_4",
+      "dataSource": "values",
       "options": "{\n    \"legend\": {\"position\": \"bottom\"},\n    \"title\": \"Value by Day\",\n    \"colors\": [\"#ff00ee\"],\n}",
       "widget": "gchart"
   }
