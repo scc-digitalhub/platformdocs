@@ -104,7 +104,21 @@ Google Charts widget:
       "widget": "gchart"
   }
 
+Chart with formatter
+********************
 
+::
+
+  {
+      "chartType": "ColumnChart",
+      "dataSource": "datasource_3",
+      "formatters": [{
+          "columnName": "Price",
+          "formatter": "p = function(value){\n    return value - (value*10)/100;\n}"
+      }],
+      "options": "{\n    \"legend\": {\"position\": \"bottom\"},\n    \"title\": \"Product Prices with 10% Discount\",\n    \"colors\": [\"#ff00ee\"],\n}",
+      "widget": "gchart"
+  }
 
 .. _Google Charts API documentation: https://developers.google.com/chart/interactive/docs/gallery
 .. _roles: https://developers.google.com/chart/interactive/docs/roles
