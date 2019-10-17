@@ -65,7 +65,7 @@ Examples
 Basic column chart
 ******************
 
-JavaScript Datasource:
+JavaScript data source:
 
 - Name: prices
 - Processor:
@@ -99,24 +99,70 @@ Google Charts widget:
 
   {
       "chartType": "ColumnChart",
-      "dataSource": "datasource_3",
+      "dataSource": "prices",
       "options": "{\n    \"legend\": {\"position\": \"bottom\"},\n}",
       "widget": "gchart"
   }
 
-Chart with formatter
+Column chart with formatter
 ********************
 
 ::
 
   {
       "chartType": "ColumnChart",
-      "dataSource": "datasource_3",
+      "dataSource": "prices",
       "formatters": [{
           "columnName": "Price",
           "formatter": "p = function(value){\n    return value - (value*10)/100;\n}"
       }],
       "options": "{\n    \"legend\": {\"position\": \"bottom\"},\n    \"title\": \"Product Prices with 10% Discount\",\n    \"colors\": [\"#ff00ee\"],\n}",
+      "widget": "gchart"
+  }
+
+Line chart with date column
+***************************
+
+JavaScript data source:
+
+- Name: values
+- Processor:
+
+  ::
+  
+    e = function(promise){
+        var data = [{
+            Day: new Date(2018,01,01),
+            Value: 15.00
+        },{
+            Day: new Date(2018,01,02),
+            Value: 0.50
+        },{
+            Day: new Date(2018,01,03),
+            Value: 1.50
+        },{
+            Day: new Date(2018,01,04),
+            Value: 2.0
+        },{
+            Day: new Date(2018,01,05),
+            Value: 20.00
+        }];
+
+        return promise.resolve(data);
+    }
+
+Google Charts widget:
+
+::
+
+  {
+      "chartType": "LineChart",
+      "columns": [{
+          "name": "Day",
+          "type": "date"
+      }],
+      "dataSource": "datasource_4",
+      "options": "{\n    \"legend\": {\"position\": \"bottom\"},\n    \"title\": \"Value by Day\",\n    \"colors\": [\"#ff00ee\"],\n}",
       "widget": "gchart"
   }
 
