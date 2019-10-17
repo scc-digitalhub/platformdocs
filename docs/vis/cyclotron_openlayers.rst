@@ -308,6 +308,7 @@ The following dashboard components are required:
   }
 
 - JSON Data Source
+
   - Name: ``air-quality-stations``
   - URL: ``https://am-test.smartcommunitylab.it/dss/services/ariadb/Stations``
   - Post-Processor:
