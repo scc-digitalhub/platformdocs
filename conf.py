@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'SCPlatform'
+project = u'Digital Hub'
 copyright = u'2019, SCC Lab'
 author = u'SCC Lab'
 

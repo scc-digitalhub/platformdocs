@@ -49,14 +49,15 @@ If the token is valid, this returns the user data, e.g., ::
 Token API
 ^^^^^^^^^^^^^^^^^^^^
 
-To get the information associated to the token (ITEF RFC7662), the following API may be used ::
+ion API (ITEF RFC 7662). The call should be provided with the Client Credentials (e.g., as BasicAuth, with ``client_id:client_secret``) ::
 
     POST /aac/token_introspection?token=<token-value> HTTPS/1.1 
     Host: aacserver.com 
     Accept: application/json 
     Authorization: Basic <client-credentials>  
 
-The data provided represents the information about the app, the user, validity, and scopes. ::
+The request returns a JSON token with standard claims regarding the user, the client, and the token. The returned claims
+rappresent the standard token claims (see ITEF RFC 7662 for details) as well as custom AAC claims (prefixed with ``aac_``). ::
 
         {
           "active": true,
@@ -85,7 +86,11 @@ Swagger documentation.
 OpenID API
 ^^^^^^^^^^
 
-The OpenID userinfo endpoint allows for getting the standard user info claims (scopes ``profile``, ``email``). The response is provided
+AAC provides support for some of the OpenID Connect functionalities. The OIDC metadata information is available at
+the  ``/.well-known/openid-configuration`` endpoint, where the supported features and relevant endpoints are captured.
+
+
+In particular, the OpenID userinfo endpoint allows for getting the standard user info claims (scopes ``profile``, ``email``). The response is provided
 in the form of JSON object or JWT token. ::
 
     GET /aac/userinfo HTTPS/1.1 
