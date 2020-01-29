@@ -32,5 +32,5 @@ Data Interfaces
 .. toctree::
   data/dss
   data/geoserver
-
+  data/ckan
 

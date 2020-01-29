@@ -41,8 +41,3 @@ Installation steps:
    - website: from ``cyclotron-site`` run the command ``gulp server``
 
 Now Cyclotron is running with its default settings and authentication is disabled.
-
-Deployment
-----------
-
-TODO

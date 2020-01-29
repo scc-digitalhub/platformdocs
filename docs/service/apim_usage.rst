@@ -53,6 +53,3 @@ API Manager Benefits
 * Designed to fit into Monolithic and Microservice Architectures with gateway and microgateway capabilities.
 * Granular access control provides security down to the API level.
 * Full Lifecycle API Management reduces need for future investments.
-
-API Manager 
-.. todo::
