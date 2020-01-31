@@ -10,21 +10,30 @@ Data Wrangling
 
 .. toctree::
   data/nifi
+  data/nuclio
 
 Data Management
 ==============
 
 .. toctree::
   data/rm
-  data/ds
   data/dremio
   data/sqlpad
+
+Data Storages
+======================
+
+.. toctree::
+  data/minio
+  data/postgres
 
 Data Processing and Analysis
 =============================
 
 .. toctree::
   data/jupyter
+  data/spark
+  data/presto
 
 Data Interfaces
 ==============
@@ -33,4 +42,13 @@ Data Interfaces
   data/dss
   data/geoserver
   data/ckan
+  data/goodtables
+
+
+Data Access
+==============
+
+.. toctree::
+  data/ghostunnel
+  data/smallstep
 
