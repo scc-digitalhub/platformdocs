@@ -7,13 +7,13 @@ The integration within the platform relies upon the organization and user model 
 supported by the DigitalHub platform. To guarantee the alignment between the two models it is necessary to
 
 - align the tenants (organizations) and the corresponding users
-- align the authentication mechanism to support the appropriate authorization models ansd Single Sign-On.
+- align the authentication mechanism to support the appropriate authorization models and Single Sign-On.
 
 More specifically, multitenancy in CKAN is based on the concept of Organization. The datasets published are associated to a specific organization
 and managed by that organization. The model of roles made available by AAC and managed by the Organization Manager allows for modelling these concepts.
 
 To allow for authentication and authorization using AAC, CKAN provides extension plugins, in particular, OAuth2.0 authentication plugin. The existing
-plugins, however, do not allow for a sophisticated user and organization management, and have been extended within the DigitalHub. In partticular,
+plugins, however, do not allow for a sophisticated user and organization management, and have been extended within the DigitalHub. In particular,
 the new CKAN extension allows for
 
 - authentication of the users based on AAC OAuth2.0 integration
