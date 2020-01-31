@@ -44,10 +44,9 @@ The **server-side** proxy is run via docker or kubernetes with the following par
 - a *policy* which checks for additional properties on valid certificate (eg groups, cn, san etc).
 
 Example execution for exposing a local MySQL on 3306 on the local port 8306 with TLS.
+::
+    $ docker run --rm squareup/ghostunnel server --listen localhost:8306 --target localhost:3306 --cert ghost.crt --key ghost.key --cacert root_ca.crt --allow-all
 
-```
-docker run --rm squareup/ghostunnel server --listen localhost:8306 --target localhost:3306 --cert ghost.crt --key ghost.key --cacert root_ca.crt --allow-all
-```
 
 2. Client proxy
 ------------------
@@ -62,10 +61,9 @@ The **client-side** proxy is executed from the binary and requires the same para
 - a *policy* which checks for additional properties on valid certificate (eg groups, cn, san etc).
 
 Example execution for a cloud Postgres, with a combined keystore (cert+key) and the override of the server identity.
+::
+    $ ~/ghostunnel-v1.4.1-linux-amd64-with-pkcs11 client --listen localhost:5432 --target 13.80.78.44:8543 --cacert root_ca.crt --keystore test.pem --override-server-name ghostunnel
 
-```
-$ ~/ghostunnel-v1.4.1-linux-amd64-with-pkcs11 client --listen localhost:5432 --target 13.80.78.44:8543 --cacert root_ca.crt --keystore test.pem --override-server-name ghostunnel
-```
 
 Do note the ``--override-server-name`` flag which is required if the server identity (CN) does not match the DNS.
 In this case the provided IP can not match the identity ``CN=ghostunnel``, and the certificate has not SAN fields.
