@@ -11,8 +11,7 @@ Common to the visualization problem are the following requirements:
 
 Visualization tools that can access Digital Hub may be divided in two categories:
 
--	Tools that work directly with data sources, such as “online” storages (e.g., PostgreSQL) or data lake (e.g., file in MinIO). 
-This includes tools sucha SQLPad and Grafana.
+-	Tools that work directly with data sources, such as “online” storages (e.g., PostgreSQL) or data lake (e.g., file in MinIO). This includes tools sucha SQLPad and Grafana.
 -	Tools that connects to the services and data exposed as “Data Interfaces”: DSS, GeoService, API REST, etc. For this purpose the platform adopts Cyclotron.
 
 
