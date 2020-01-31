@@ -1,7 +1,7 @@
 Minio
 =============
 Minio (https://min.io/) is a high-performance distributed object storage system, open source, 
-which provides us with a scalable, lightweight and secure data lake. 
+which provides us with a scalable, lightweight and secure data lake.
 Minio is an open source *S3 Compatible* storage system, which can be directly used by every
 application able to understand the *Simple Storage Service (S3)* protocol.
 
@@ -49,7 +49,7 @@ environment, either local or remote, and deploy a container attached to a perman
 physical or virtual disks, network shares or cloud storage systems.
 
 In order to test locally it is enough to leverage *Docker* to run the container via
-
+::
     $ docker pull minio/minio
     $ docker run -p 9000:9000 minio/minio server /data
 
@@ -66,10 +66,10 @@ Digital Hub integration
 A cloud native system such as Minio is inherently designed to be utilized concurrently by many different
 users and tenants. Minio natively supports:
 
-* multiple users
-* multiple spaces (*buckets*) with dedicated access and lifecycle policies
-* complex policies with the ability to discriminate actions and capabilities for users based on various attributes
-* externally provided *Key Management Systems (KMS)* to securely handle and distribute encryption keys
+- multiple users
+- multiple spaces (*buckets*) with dedicated access and lifecycle policies
+- complex policies with the ability to discriminate actions and capabilities for users based on various attributes
+- externally provided *Key Management Systems (KMS)* to securely handle and distribute encryption keys
 
 Nevertheless, it is mandatory for a properly usable product to integrate a management system, able to
 create,manage and destroy resources and coordinate user and policies. 

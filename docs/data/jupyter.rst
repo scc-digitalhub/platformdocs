@@ -55,12 +55,13 @@ Installation
 The Jupyter notebook can be installed locally on a pc by using a *Python* package manager such as 
 ``pip`` or ``conda``. While Jupyter can run code in many languages, to install the application Python is a 
 requirement.
-Either one of the following instructions will install Jupyter
-
+Either one of the following instructions will install Jupyter:
+::
     $ pip install jupyterlab
 
-or
 
+for *pip*, otherwise when using *conda* type:
+::
     $ conda install -c conda-forge jupyterlab
 
 (*see https://jupyter.readthedocs.io/en/latest/install.html*)
@@ -138,12 +139,12 @@ and release the resources to the cluster.
 The administrators can personalize and pre-configure the set of images available to users, which will then
 be able to autonomously install packages into their own ephemeral environment as needed.
 
-Obviously, by employing *non-persistant* containers to serve users, all the data and code uploaded and
+Obviously, by employing *non-persistent* containers to serve users, all the data and code uploaded and
 produced during the lifetime of the pod will be lost. While this may be of little inconvenience for 
 testing and small tasks, many use cases require the persistance of data and code during different sessions.
 
-The idea that we will explore in building the *DigitalHub* is to consolidate all the persistant data 
-into an external storage, being it a database, a datawarehouse or even a cloud object storage, and then
+The idea that we will explore in building the *DigitalHub* is to consolidate all the persistent data 
+into an external storage, being it a database, a data-warehouse or even a cloud object storage, and then
 automatically connect those resources to the Jupyter Notebook environment, in order to let users 
 transparently access them. This way, all the temporary data can be left on locally attached disks, to maximize
 performances and minimize the latency, and the datasets, outputs and relevant objects will be persisted and
@@ -152,5 +153,5 @@ eventually versioned and tracked inside the data lake.
 The same approach will be taken for the scripts and code blocks, this time leveraging *git* to automatically
 version and sync the code to a dedicated repository.
 
-Ideally, users will be able to dynamically provision a complete, ready to use computing enviroment within seconds,
+Ideally, users will be able to dynamically provision a complete, ready to use computing environment within seconds,
 either on the shared cloud or inside a personal workstation, and access all the datasets and code all the time.
