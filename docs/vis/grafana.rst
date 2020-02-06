@@ -16,6 +16,7 @@ Referring to the documentation https://grafana.com/docs/grafana/latest/installat
 
 		$docker run -d -p 3000:3000 grafana/grafana
 
+as a result, the service will be accessible over the port 3000, http://localhost:3000
 
 Features
 -----------

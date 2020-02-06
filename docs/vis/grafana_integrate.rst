@@ -21,7 +21,7 @@ Integration within the DigitalHub platform
 
 2. Enable AAC OAuth in Grafana
 """""""""""""""""""""""""""""""""
-Finally set up the **generic oauth module** like this: ::
+Finally set up the **generic oauth module** in the conf/custom.ini file like this: ::
 
 		#################################### Generic OAuth #######################
 		[auth.generic_oauth]
