@@ -169,7 +169,7 @@ Configuration
 
 Configure AAC using environment variables in aac/aac-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/service/aac.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/service/aac.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -186,7 +186,7 @@ Configuration
 
 Configure Org-Manager using environment variables in org-manager/org-manager-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/service/orgman.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/service/orgman.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -203,7 +203,7 @@ Configuration
 
 Configure APIM-Analytics using environment variables in apim-analytics/apim-analytics-configmap.yml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/service/apim.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/service/apim.html>`_
 
 Installation
 """"""""""""
@@ -218,7 +218,7 @@ Configuration
 
 Configure API-Manager using environment variables in api-manager/apim-configmap.yml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/service/apim.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/service/apim.html>`_
 
 Installation
 """"""""""""
@@ -234,7 +234,7 @@ Configuration
 
 Configure Dremio using environment variables in dremio/dremio-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/data/dremio.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/data/dremio.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -250,7 +250,7 @@ Configuration
 
 Configure Dss using environment variables in dss/dss-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/data/dss.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/data/dss.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -273,7 +273,7 @@ Install JupyterHub using Helm Chart.
 
 The JupyterHub Helm chart is configurable by values in your config.yaml.
 
-See documentation for details: `https://zero-to-jupyterhub.readthedocs.io/en/latest/`_
+See documentation for details: `<https://zero-to-jupyterhub.readthedocs.io/en/latest/>`_
 
 Minio
 -----
@@ -289,7 +289,7 @@ Install Minio using Helm Chart.
 
 The Minio Helm chart is configurable by values in your values.yaml.
 
-See documentation for details: `https://docs.min.io/docs/deploy-minio-on-kubernetes.html`_
+See documentation for details: `<https://docs.min.io/docs/deploy-minio-on-kubernetes.html>`_
 
 Nifi
 ----
@@ -299,7 +299,7 @@ Configuration
 
 Use the tls-toolkit command line utility to automatically generate the required keystores, truststore.
 
-See documentation for details: `https://nifi.apache.org/docs/nifi-docs/html/toolkit-guide.html#tls_toolkit`_
+See documentation for details: `<https://nifi.apache.org/docs/nifi-docs/html/toolkit-guide.html#tls_toolkit>`_
 
 Create a Secret that holds both keystore and truststore.
 
@@ -327,7 +327,7 @@ Install Nuclio using Helm Chart.
 
 The Nuclio Helm chart is configurable by values in your values.yaml.
 
-See documentation for details: `https://github.com/nuclio/nuclio/tree/master/hack/k8s/helm/nuclio`_
+See documentation for details: `<https://github.com/nuclio/nuclio/tree/master/hack/k8s/helm/nuclio>`_
 
 2. OAuth2_Proxy
 ^^^^^^^^^^^^^^^
@@ -337,7 +337,7 @@ Configuration
 
 Configure OAuth2_Proxy using environment variables in nuclio/oauth2_proxy.yml file.
 
-See documentation for details: `https://pusher.github.io/oauth2_proxy`_
+See documentation for details: `<https://pusher.github.io/oauth2_proxy>`_
 
 Installation
 """"""""""""
@@ -353,7 +353,7 @@ Configuration
 
 Configure Resource Manager using environment variables in resource-manager/resource-manager-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/data/rm.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/data/rm.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -369,7 +369,7 @@ Configuration
 
 Configure SQLPad using environment variables in sqlpad/sqlpad-configmap.yaml file.
 
-See documentation for details: `https://digitalhub.readthedocs.io/en/latest/docs/data/sqlpad.html`_
+See documentation for details: `<https://digitalhub.readthedocs.io/en/latest/docs/data/sqlpad.html>`_
 
 Installation
 ^^^^^^^^^^^^
@@ -385,7 +385,7 @@ Installation & Configuration
 
 Refer to the documentation to run ThingsBoard in Microservices Mode.
 
-`Kubernetes resources configuration for ThingsBoard Microservices <https://github.com/thingsboard/thingsboard/tree/master/k8s#kubernetes-resources-configuration-for-thingsboard-microservices>`_
+`<Kubernetes resources configuration for ThingsBoard Microservices <https://github.com/thingsboard/thingsboard/tree/master/k8s#kubernetes-resources-configuration-for-thingsboard-microservices>>`_
 
 
-ThingsBoard documentation: `https://thingsboard.io/docs/`_
+ThingsBoard documentation: `<https://thingsboard.io/docs/>`_
