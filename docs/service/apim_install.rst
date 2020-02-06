@@ -11,8 +11,9 @@ It’s hybrid integration capabilities further simplify projects that span tradi
 | It allows extensibility and customization, and ensures freedom from lock-in.
 | The customized version of APIM inside Digital Hub can be set up following these steps:
 
+
 Installation Requirements
--------------------------
+--------------------------
 
 * :doc:`aac`
 * MySQL 5.5+
@@ -198,5 +199,44 @@ The configuration steps are the following:
 * copy **apim.custom.user.store.stub-0.0.1.jar** from the project ``orgmanager-wso2connector/apim.custom.user.store.stub`` to the WSO2 directory repository/components/dropins
 
 As a result the new admin stub can be accessible from the following endpoint: https://$APIM_URL/services/CustomUserStoreManagerService
+
+
+Configuration using docker
+--------------------------
+
+| Docker resources for each of the component of the platform, including APIM, help you build generic Docker images for deploying the corresponding servers in containerized environments. 
+| Configurations, custom JDBC drivers other than the default MySQL JDBC driver provided, extensions and other deployable artifacts are designed to be provided via volume mounts to the containers spawned.
+| Refer to the `APIM's repository docker files <https://github.com/scc-digitalhub/API-Manager/tree/master/dockerfiles/apim>`_.
+| Set up the parameters in the apim.env file according to the explanation provided in the table below:
+
++---------------------+--------------------------+-------------------------------------------------------------------+
+| Property            |  Default                 |  Description                                                      |
++=====================+==========================+===================================================================+
+| APIM_USER           |  ``admin``               |  The name of the admin user                                       |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_PASS           |  ``admin``               |  The password of the admin user                                   |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_HOSTNAME       |  ``api-manager``         |  The name of the running container of apim                        |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_REVERSEPROXY   |  ``api.platform.local``  |  The name of reverse proxy in the nginx config                    |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_GATEWAYENDPOINT|  ``gw.platform.local``   |  The value of gateway                                             | 
++---------------------+--------------------------+-------------------------------------------------------------------+
+| ANALYTICS_HOSTNAME  |  ``am-analytics``        |  The name of the running container of apim analytics              |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| AAC_HOSTNAME        |  ``aac``                 |  The name of the container running AAC                            |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| AAC_CONSUMERKEY     |  ``f04ca519XXXX``        |  The value of consumer key from AAC console for APIM Client App   |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| AAC_CONSUMERSECRET  |  ``e181bf39XXXX``        |  The value of consumer secret from AAC console for APIM Client App|
++---------------------+--------------------------+-------------------------------------------------------------------+
+| AAC_REVERSEPROXY    |  ``aac.platform.local``  |  The reverse proxy value for AAC                                  | 
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_MYSQL_HOSTNAME |  ``mysql``               |  The name of the running container of mysql instance              |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_MYSQL_USER     |  ``wso2carbon``          |  MySQL db username                                                |
++---------------------+--------------------------+-------------------------------------------------------------------+
+| APIM_MYSQL_PASS     |  ``wso2carbon``          |  MySQL db password                                                |
++---------------------+--------------------------+-------------------------------------------------------------------+
 
 
