@@ -155,8 +155,3 @@ In case you run the tool from the IDE, add the profile configuration to the VM p
 To enable the authorization module, add the corresponding profile to the profile list (comma-separated)
 
 Once started, the AAC tool UI is available at ``http://localhost:8080/aac``.
-
-Docker 
-^^^^^^^^^^^^
-
-TODO

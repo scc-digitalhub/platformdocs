@@ -1,5 +1,7 @@
+.. _ckan:
+
 Comprehensive Knowledge Archive Network (CKAN)
-===========================
+======================================================
 
 | CKAN is an Open Source platform for making catalogs of open data, such as spredsheets, geospatial GeoJSON data, OData, etc. 
 | CKAN is inspired by the package management systems as in Linux OS. CKAN codebase is maintained by Open Knowledge Foundation.

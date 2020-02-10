@@ -2,8 +2,11 @@ GeoServer
 ======================
 
 | GeoServer is an open source software server written in Java that allows users to share and edit geospatial data. 
+
 | Designed for interoperability, it publishes data from any major spatial data source using open standards.
+
 | GeoServer is the reference implementation of the Open Geospatial Consortium (OGC) Web Feature Service (WFS) and Web Coverage Service (WCS) standards, as well as a high performance certified compliant Web Map Service (WMS). GeoServer forms a core component of the Geospatial Web.
+
 In order to manage the configuration, Geoserver provides:
 	* an interactive interface (via the `web admin interface <https://docs.geoserver.org/latest/en/user/webadmin/index.html#web-admin>`_) 
 	* a programmatic interface (through the `REST API <https://docs.geoserver.org/latest/en/user/rest/index.html#rest>`_) 
