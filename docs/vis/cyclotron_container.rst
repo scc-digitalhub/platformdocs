@@ -3,7 +3,7 @@ Widget Container
 
 The Widget Container widget allows to position other widgets within itself as if it were a page inside the page, i.e., with its own grid layout and theme. Its configuration is similar to that of a regular Page.
 
-In order to add widgets to the container, its **Name property** must be specified. Each widget has an optional **Container property** which holds the name of the Container widget that should contain it. If this property is specified, the widget will be added to the container instead of the Page.
+In order to add widgets to the container, its **Name property** must be specified. Each widget has an optional **Container property** which holds the name of the Container widget that should contain it. If this property is specified, the widget will be added to the container instead of the Page and its dimensions will be determined by the container grid layout.
 
 Layout Configuration
 -------------
