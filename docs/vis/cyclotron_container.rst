@@ -22,3 +22,117 @@ Border Width                     borderWidth                                    
 Margin                           margin               ``10``                    Empty margin width (in pixels) around the outer edge of the container. Can be set to 0 to remove the margin.
 Scrolling Enabled                scrolling            ``true``                  Enables vertical scrolling of the container to display content longer than the current size
 ================================ ==================== ========================= ==================
+
+Example
+-------------
+
+The following image shows a sample dashboard with a few widgets, both displayed on the page and inside a container. The dashboard JSON definition can be found below.
+
+.. image:: ../assets/cyclotron-widget-container.png
+
+::
+
+  {
+      "dataSources": [{
+          "name": "some-links",
+          "preload": true,
+          "processor": "p = function () {\n    return [{\n        description: 'foo',\n        link: '/ex1',\n        name: 'foo',\n        type: 'Widget'\n    },{\n        description: 'bar',\n        link: '/ex2',\n        name: 'bar',\n        type: 'Widget'\n    }];\n}",
+          "type": "javascript"
+      }],
+      "name": "example-widget-containers",
+      "pages": [{
+          "frequency": 1,
+          "layout": {
+              "gridColumns": 4,
+              "gridRows": 4
+          },
+          "widgets": [{
+              "gridHeight": 1,
+              "gridWidth": 4,
+              "numbers": [{
+                  "number": "42"
+              }],
+              "orientation": "horizontal",
+              "widget": "number"
+          }, {
+              "gridHeight": 2,
+              "gridWidth": 1,
+              "rules": {
+                  "red": "${true}"
+              },
+              "tooltip": "Time To Stop",
+              "widget": "stoplight"
+          }, {
+              "gridHeight": 3,
+              "gridWidth": 3,
+              "layout": {
+                  "gridColumns": 2,
+                  "gridRows": 4
+              },
+              "name": "Cont",
+              "title": "Container",
+              "widget": "widgetContainer"
+          }, {
+              "container": "Cont",
+              "gridHeight": 1,
+              "gridWidth": 1,
+              "name": "contained-number",
+              "numbers": [{
+                  "number": "42"
+              }],
+              "orientation": "horizontal",
+              "widget": "number"
+          }, {
+              "container": "Cont",
+              "gridHeight": 1,
+              "gridWidth": 1,
+              "name": "contained-stoplight",
+              "rules": {
+                  "red": "${true}"
+              },
+              "tooltip": "Time To Stop",
+              "widget": "stoplight"
+          }, {
+              "columns": [{
+                  "label": "Name",
+                  "link": "#{link}",
+                  "name": "name"
+              }, {
+                  "label": "Description",
+                  "name": "description"
+              }, {
+                  "name": "link"
+              }, {
+                  "name": "type"
+              }],
+              "container": "Cont",
+              "dataSource": "some-links",
+              "gridHeight": 2,
+              "gridWidth": 2,
+              "name": "contained-table",
+              "widget": "table"
+          }, {
+              "columns": [{
+                  "label": "Name",
+                  "link": "#{link}",
+                  "name": "name"
+              }, {
+                  "label": "Description",
+                  "name": "description"
+              }, {
+                  "name": "link"
+              }, {
+                  "name": "type"
+              }],
+              "dataSource": "some-links",
+              "gridHeight": 1,
+              "gridWidth": 1,
+              "widget": "table"
+          }]
+      }],
+      "parameters": [],
+      "sidebar": {
+          "showDashboardSidebar": false
+      },
+      "theme": "light"
+  }
