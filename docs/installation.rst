@@ -377,6 +377,8 @@ Installation
 
     $ kubectl apply -f sqlpad/
 
+.. _thingsboard-installation:
+
 Thingsboard
 -----------
 
@@ -385,7 +387,7 @@ Installation & Configuration
 
 Refer to the documentation to run ThingsBoard in Microservices Mode.
 
-`<Kubernetes resources configuration for ThingsBoard Microservices <https://github.com/thingsboard/thingsboard/tree/master/k8s#kubernetes-resources-configuration-for-thingsboard-microservices>>`_
+Kubernetes resources configuration for ThingsBoard Microservices `<https://github.com/thingsboard/thingsboard/tree/master/k8s#kubernetes-resources-configuration-for-thingsboard-microservices>`_
 
 
 ThingsBoard documentation: `<https://thingsboard.io/docs/>`_
