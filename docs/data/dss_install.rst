@@ -100,7 +100,7 @@ See the example below:::
 		     <Parameter name="ClientSecret">YOUR_AAC_CLIENT_SECRET</Parameter>
 		     <Parameter name="AuthorizationURL">http://localhost:8080/aac/oauth/authorize</Parameter>
 		     <Parameter name="TokenURL">http://localhost:8080/aac/oauth/token</Parameter>
-		     <Parameter name="CheckTokenEndpointUrl">http://localhost:8080/aac/resources/token</Parameter>
+		     <Parameter name="CheckTokenEndpointUrl">http://localhost:8080/aac/oauth/introspect</Parameter>
 		     <Parameter name="APIUserInfoURL">http://localhost:8080/aac/basicprofile/me</Parameter>
 		     <Parameter name="APIRoleInfoURL">http://localhost:8080/aac/userroles/me</Parameter>
 		     <Parameter name="GetRolesOfTokenURL">http://localhost:8080/aac/userroles/token</Parameter>
