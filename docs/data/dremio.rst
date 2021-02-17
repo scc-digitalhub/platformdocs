@@ -9,7 +9,7 @@ The official website is https://www.dremio.com.
 
 Data sources
 ------------------------------------------
-Dremio supports modern data lakes built on a variety of different systems and provides
+Dremio supports modern data lakes built on a variety of different systems and provides:
 
 - native integrations with major RDBMS such as PostgresSQL, MySQL, MS SQL, IBM DB2, Oracle
 - NoSQL integration for modern datastores as MongoDB, Elasticsearch
@@ -70,7 +70,7 @@ You can read more at https://docs.dremio.com/deployment/rpm-tarball-install.html
 Platform fork
 ------------------------------------------
 The integration of Dremio into the Digital Hub platform required extending the open source version, 
-which lacks some *enteprise* features, to support:
+which lacks some enteprise features, to support:
 
 - **external user authentication** via OAuth2.0 and OpenID Connect
 - **multitenancy** (see `Multitenancy and Organizational Model <https://digitalhub.readthedocs.io/en/latest/docs/architecture.html#multitenancy-and-organizational-model>`_)
@@ -104,6 +104,7 @@ the root of their path, and do not need to be prefixed. For example, in the foll
 and ``mydataset`` all belong to ``mytenant``:
 
 ::
+
     mytenant__myspace
     └───myfolder
         └───mydataset
@@ -134,6 +135,7 @@ Under "Roles & Claims", set:
 - custom claim mapping function:
 
 .. code-block:: javascript
+
     function claimMapping(claims) {
         var valid = ['ROLE_USER'];
         var owner = ['ROLE_OWNER']
@@ -182,6 +184,7 @@ step on AAC, the user will be asked to select which tenant to use.
 Open the file ``common/src/main/resources/dremio-reference.conf`` and update ``services.coordinator.web.auth`` as follows:
 
 .. code-block:: javascript
+
     auth: {
         type: "oauth",
         oauth: {
@@ -203,6 +206,7 @@ that will be used as username in Dremio, otherwise the regular username will be 
 Additionally, to fully disable dremio.com intercom, update ``services.coordinator.web.ui`` as follows:
 
 .. code-block:: javascript
+
     ui {
         intercom: {
             enabled: false
@@ -215,11 +219,13 @@ Building from source
 Dremio is a *maven* project, and as such can be properly compiled, along with all the dependencies, via the usual ``mvn`` commands:
 
 ::
+
     mvn clean install
 
 Since some modules require license acceptance and checks, in automated builds it is advisable to skip those checks to avoid a failure:
 
 ::
+
     mvn clean install -DskipTests -Dlicense.skip=true 
 
 The ``skipTests`` flag is useful to speed up automated builds, for example for Docker container rebuilds, once the CI has 
@@ -229,6 +235,7 @@ During development of new modules or modifications, it is advisable to disable t
 In order to build a single module, for example *dremio-common*, use the following syntax:
 
 ::
+
     mvn clean install -DskipTests -Dlicense.skip=true -Dcheckstyle.skip -pl :dremio-common
 
 To test the build, you can execute only the *distribution* module, which will produce a complete distribution tree 
@@ -236,6 +243,7 @@ under the ``distribution/server/target`` folder, and a **tar.gz** with the deplo
 for example ``./distribution/server/target/dremio-community-3.2.1-201905191350330803-1a33f83.tar.gz``.
 
 ::
+
     mvn clean install -DskipTests -Dlicense.skip=true -pl :dremio-distribution
 
 The resulting archive can be installed as per upstream instructions.
