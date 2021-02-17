@@ -1,37 +1,35 @@
 Dremio
-======================
+==========================================
 
-Dremio is a *Data-as-a-Service* platform, which enables data analysts and scientists to autonomously explore, validate and curate data from a variety of sources, all in a single, unified and coherent interface.
+Dremio is a *Data-as-a-Service* platform, which enables data analysts and scientists to autonomously explore, 
+validate and curate data from a variety of sources, all in a single, unified and coherent interface. 
 Built for teams, Dremio leverages spaces and virtual datasets to offer a data platform with the following features.
 
-Website https://www.dremio.com
+The official website is https://www.dremio.com.
 
 Data sources
-----------------
-Support for modern data lakes built on a variety of different systems: 
+------------------------------------------
+Dremio supports modern data lakes built on a variety of different systems and provides
 
 - native integrations with major RDBMS such as PostgresSQL, MySQL, MS SQL, IBM DB2, Oracle
 - NoSQL integration for modern datastores as MongoDB, Elasticsearch
 - support for file based datasources, cloud storage systems, NAS
 
 Data exploration
------------------
-Dremio offers an unified view across all datasets connected to the platform, with :
+------------------------------------------
+Dremio offers a unified view across all datasets connected to the platform, with:
 
-- live data visualization during queries preparation and execution, with dynamic previews
+- live data visualization during query preparation and execution, with dynamic previews
 - optimized query pushdown for all sources in native query language
 - virtual datasets based on complex queries available as sources for analytics and external tools
 
-
 Cloud ready
-------------
-Dremio is architected for cloud environments, with elastic compute abilities and dynamic horizontal scaling.
+------------------------------------------
+Dremio is architected for cloud environments, with elastic computing abilities and dynamic horizontal scaling. 
 Data reflections can be stored into distributed storage platforms such as *S3*, *HDFS*, *ADLS*.
 
-
-Screenshots
--------------
-*from website*
+Screenshots from the website
+------------------------------------------
 
 .. image:: ../assets/dremio/dremio_9.png
     :width: 200px
@@ -47,16 +45,17 @@ Screenshots
 
 
 Installation
-----------------
-Dremio is a Java software, and requires a compatible JDK installed.
-Current version supports only ``OpenJDK 1.8`` and ``Oracle JDK 1.8``.
+------------------------------------------
+Dremio is a Java software and requires a compatible JDK installed. The current version supports 
+only ``OpenJDK 1.8`` and ``Oracle JDK 1.8``.
 
-System requirements are :
+System requirements are:
 
 - a supported Linux distribution: ``RHEL/CentOS 6.7+/7.3+``, ``SLES 12+``, ``Ubuntu 14.04+``, ``Debian 7+``
 - at least ``4 CPU cores`` and ``8GB RAM`` for starting the software.
 
-Given the nature of data analysis, and the distributed design of the software, production deployments should follow the following indications.
+Given the nature of data analysis, and the distributed design of the software, production deployments 
+should follow the following indications:
 
 =============== ===============================
 Node role       Hardware required
@@ -66,83 +65,177 @@ Executors       4 CPU/16GB RAM minimum
                 16 CPU/64GB RAM recommended
 =============== ===============================
 
-
-Read more at https://docs.dremio.com/deployment/rpm-tarball-install.html 
-
-
+You can read more at https://docs.dremio.com/deployment/rpm-tarball-install.html.
 
 Platform fork
-----------------------
+------------------------------------------
+The integration of Dremio into the Digital Hub platform required extending the open source version, 
+which lacks some *enteprise* features, to support:
 
-The open source version of Dremio lacks some *enteprise* features, such as external authentication and permission/roles system.
-As such, we have forked the source code and modified both the backend and the frontend UI in order to:
+- **external user authentication** via OAuth2.0 and OpenID Connect
+- **multitenancy** (see `Multitenancy and Organizational Model <https://digitalhub.readthedocs.io/en/latest/docs/architecture.html#multitenancy-and-organizational-model>`_)
 
-- add external OAuth2 support, with access via the secure *authorization_code* flow and a native Dremio token integration for UI
-- add roles for *admin/user* distinction, with the exclusive ability for admins to manage data sources, users and spaces
-- implement automatic user creation upon valid OAuth2 access, with personal space definition and resource creation
-- introduce role mapping from OAuth2 userInfo claims, with dedicated configuration items (available via ENV) for deployment flexibility
-- update UI to add OAuth2 login and to properly hide admin actions and menus to unprivileged users
-- disable by default upstream *support service*, which exposes metrics, interactive chat and debug information to Dremio.com for licensed enterprise environments
+Without these extensions, Dremio supports internal authentication only and grants administrator privileges to all users, 
+hence every user can access any resource indiscriminately.
 
-The last item should be reviewed in privacy-sensitive environments, since the complete deactivation of user and session data leakage to dremio.com and its partners requires the explicit configuration of various properties in ``dremio.conf``.
+As far as **authentication** is concerned, the following features have been implemented:
 
+- OAuth2.0 support, with access via the secure *authorization_code* flow and a native Dremio token integration for UI
+- authomatic user creation and personal space (user home) definition upon valid OAuth2.0 access
+- distinction between ADMIN role and USER role, which reflects on the UI in that admin actions and menus are hidden to unprivileged users
+- OAuth2.0 login in the UI
 
-The new properties introduced by the fork are:
+Additionally, the upstream support service, which exposes metrics, interactive chat and debug information to dremio.com 
+for licensed enterprise environments, is disabled by default. This should be reviewed in privacy-sensitive environments, 
+as the complete deactivation of user and session data leakage to dremio.com and its partners requires the explicit 
+configuration of various properties in ``dremio.conf``.
+
+The **multitenancy model** implemented in the fork is structured as follows:
+
+- admin privileges are not assignable, ADMIN role is reserved to ``dremio`` user, every other user is assigned USER role
+- each user is associated to a single tenant
+- the tenant is attached to the username with the syntax ``<username>@<tenant>``
+- all APIs accessible to regular users are protected so that non-admin users can only access resources within their own tenant
+- when a resource belongs to a tenant (i.e. is shared among all its users), such tenant is specified as a prefix in the resource path with the syntax ``<tenant>__<rootname>/path/to/resource``
+
+In Dremio, resources are either containers (spaces, sources, homes) or inside a container (folders, datasets), therefore 
+spaces and sources are prefixed with their tenant, while folders and datasets inherit it from their container, which is 
+the root of their path, and do not need to be prefixed. For example, in the following resource tree, ``myspace``, ``myfolder`` 
+and ``mydataset`` all belong to ``mytenant``:
+
+::
+    mytenant__myspace
+    └───myfolder
+        └───mydataset
+
+The admin user can access any resource. Regular users can only access resources inside their own home or belonging to their tenant. 
+This implies that users can only query data and access job results according to these constraints.
+
+Configuration for OAuth2.0
+------------------------------------------
+
+.. note::
+    The configuration described below uses `AAC <https://digitalhub.readthedocs.io/en/latest/docs/service/aac.html>`_ 
+    as the authentication provider, however any standard OAuth2.0 provider can be used.
+
+1. Configuring a client application on AAC
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+On your AAC instance, create a new client app named ``dremio`` with the following properties:
+
+- redirect web server URLs: ``<dremio_url>/apiv2/oauth/callback``
+- grant types: ``Authorization Code``
+- enabled identity providers : ``internal``
+- enabled scopes: ``openid, profile, email, user.roles.me``
+
+Under "Roles & Claims", set:
+
+- unique role spaces: ``components/dremio``
+- role prefix filters: ``components/dremio``
+- custom claim mapping function:
 
 .. code-block:: javascript
+    function claimMapping(claims) {
+        var valid = ['ROLE_USER'];
+        var owner = ['ROLE_OWNER']
+        var prefix = "components/dremio/";
 
-    services.coordinator.web.auth: {
-        type: "oauth", # Possible values are "internal", "oauth"
+        if (claims.hasOwnProperty("roles") && claims.hasOwnProperty("space")) {
+            var space = claims['space'];
+            //for debug with no space selection performed
+            if (Array.isArray(claims['space'])) {
+                space = claims['space'][0];
+            }
+
+            //lookup for policy for selected space
+            var tenant = null;
+            for (ri in claims['roles']) {
+                var role = claims['roles'][ri];
+                if (role.startsWith(prefix + space + ":")) {
+                    var p = role.split(":")[1]
+
+                    //replace owner with USER
+                    if (owner.indexOf(p) !== -1) {
+                        p = "ROLE_USER"
+                    }
+
+                    if (valid.indexOf(p) !== -1) {
+                        tenant = space
+                        break;
+                    }
+                }
+            }
+
+            if (tenant != null) {
+                claims["dremio/tenant"] = tenant;
+                claims["dremio/username"] = claims['username']+'@'+tenant;
+            } 
+        }
+        return claims;
+    }
+
+This function adds a custom claim holding a single user tenant, as AAC supports users being associated to multiple tenants 
+while Dremio does not (see https://github.com/scc-digitalhub/AAC#53-services-scopes-and-claims). During the authorization 
+step on AAC, the user will be asked to select which tenant to use.
+
+2. Configuring Dremio
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Open the file ``common/src/main/resources/dremio-reference.conf`` and update ``services.coordinator.web.auth`` as follows:
+
+.. code-block:: javascript
+    auth: {
+        type: "oauth",
         oauth: {
-            authorizationUrl: ""
-            tokenUrl: ""
-            userInfoUrl: ""
-            callbackUrl: ""
-            clientId: ""
-            clientSecret: ""
-            roleField: ""
-            roleUser: "user"
-            roleAdmin: "admin"
+            authorizationUrl: "<aac_url>/eauth/authorize"
+            tokenUrl: "<aac_url>/oauth/token"
+            userInfoUrl: "<aac_url>/userinfo"
+            callbackUrl: "<dremio_url>"
+            clientId: "<your_client_id>"
+            clientSecret: "<your_client_secret>"
+            tenantField: "dremio/username"
+            scope: "openid profile email user.roles.me"
         }
     }
 
-Additionally, to fully disable dremio.com intercom set the following:
+The ``tenantField`` property matches the claim defined in the function above, which holds both the username and the user tenant 
+with the syntax ``<username>@<tenant>``. If this property is used to specify which user info field stores such information, 
+that will be used as username in Dremio, otherwise the regular username will be used.
+
+Additionally, to fully disable dremio.com intercom, update ``services.coordinator.web.ui`` as follows:
 
 .. code-block:: javascript
-
-   services.coordinator.web.ui {
+    ui {
         intercom: {
             enabled: false
             appid:  ""
         }
-   }
-
-
-
+    }
 
 Building from source
---------------------
-
+------------------------------------------
 Dremio is a *maven* project, and as such can be properly compiled, along with all the dependencies, via the usual ``mvn`` commands:
 
+::
     mvn clean install
 
 Since some modules require license acceptance and checks, in automated builds it is advisable to skip those checks to avoid a failure:
 
-    mvn clean install DskipTests -Dlicense.skip=true 
+::
+    mvn clean install -DskipTests -Dlicense.skip=true 
 
-The *skipTests* flags is useful to speed up automated builds, for example for Docker container rebuilds, once the CI has properly executed all the tests.
+The ``skipTests`` flag is useful to speed up automated builds, for example for Docker container rebuilds, once the CI has 
+properly executed all the tests.
 
+During development of new modules or modifications, it is advisable to disable the *style-checker* via the ``-Dcheckstyle.skip`` flag. 
+In order to build a single module, for example *dremio-common*, use the following syntax:
 
-During development of new modules or modifications, it is advisable to disable the *style-checker* via the ``-Dcheckstyle.skip`` flag.
-In order to build a single module, use the following syntax:
+::
+    mvn clean install -DskipTests -Dlicense.skip=true -Dcheckstyle.skip -pl :dremio-common
 
-    mvn clean install -pl :dremio-common -DskipTests -Dlicense.skip=true -Dcheckstyle.skip
+To test the build, you can execute only the *distribution* module, which will produce a complete distribution tree 
+under the ``distribution/server/target`` folder, and a **tar.gz** with the deployable package named *dremio-community-{version}-{date}-{build}*, 
+for example ``./distribution/server/target/dremio-community-3.2.1-201905191350330803-1a33f83.tar.gz``.
 
-where *dremio-common* is the module.
-To test the build, we can execute only the *distribution* tasks, which will produce a complete 
-distribution tree under the ``distribution/server/target`` folder, and a **tar.gz** with the deployable package named as *version-date-build*, for example ``./distribution/server/target/dremio-community-3.2.1-201905191350330803-1a33f83.tar.gz``.
+::
+    mvn clean install -DskipTests -Dlicense.skip=true -pl :dremio-distribution
 
-    mvn clean install -pl :dremio-distribution -DskipTests -Dlicense.skip=true
-
-The resulting archive can be installed as per upstream instructions.    
+The resulting archive can be installed as per upstream instructions.
