@@ -7,6 +7,8 @@ Built for teams, Dremio leverages spaces and virtual datasets to offer a data pl
 
 The official website is https://www.dremio.com.
 
+The official documentation with details on how to use Dremio is https://docs.dremio.com/.
+
 Data sources
 ------------------------------------------
 Dremio supports modern data lakes built on a variety of different systems and provides:
@@ -111,6 +113,10 @@ and ``mydataset`` all belong to ``mytenant``:
 
 The admin user can access any resource. Regular users can only access resources inside their own home or belonging to their tenant. 
 This implies that users can only query data and access job results according to these constraints.
+
+.. note::
+    Currently, when you create a new source or space, you must **manually prefix its name with the tenant** 
+    you want it to belong to. Non-admin users cannot create sources or spaces with a different tenant than their own.
 
 Configuration for OAuth2.0
 ------------------------------------------
@@ -247,3 +253,7 @@ for example ``./distribution/server/target/dremio-community-3.2.1-20190519135033
     mvn clean install -DskipTests -Dlicense.skip=true -pl :dremio-distribution
 
 The resulting archive can be installed as per upstream instructions.
+
+.. note::
+    The first time you open Dremio, you will be asked to create an administrator account. 
+    The admin user **must** have the username `dremio`, as that is currently the only user that can have admin privileges.
