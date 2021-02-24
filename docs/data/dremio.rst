@@ -256,4 +256,160 @@ The resulting archive can be installed as per upstream instructions.
 
 .. note::
     The first time you open Dremio, you will be asked to create an administrator account. 
-    The admin user **must** have the username `dremio`, as that is currently the only user that can have admin privileges.
+    The admin user **must** have the username ``dremio``, as that is currently the only user that can have admin privileges.
+
+Dremio APIs
+------------------------------------------
+Many features of Dremio are available via the Dremio REST API. Two versions of the API currently coexist:
+
+- v2 is still used internally, although it should be dismissed in the future
+- v3 is documented on the Dremio docs as the official REST API and is progressively replacing v2 also internally
+
+Here is a collection of all the **v3 endpoints** with the links to the corresponding Dremio docs pages, if any. Note that 
+access to some APIs has been restricted to admin users in the fork, while regular users have been granted access 
+to source management APIs. The required permission is marked in **bold** in the tables whenever it differs from 
+the official documentation.
+
+The API path is ``<dremio_url>/api/v3``.
+
+**Catalog API**:
+
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| Path                             | Method | Docs                                                                     | Permission |
++==================================+========+==========================================================================+============+
+| /catalog                         | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog.html                | user       |
++                                  +--------+--------------------------------------------------------------------------+------------+
+|                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog.html               | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/{id}                    | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog-id.html             | user       |
++                                  +--------+--------------------------------------------------------------------------+------------+
+|                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-id.html            | user       |
++                                  +--------+--------------------------------------------------------------------------+------------+
+|                                  | PUT    | https://docs.dremio.com/rest-api/catalog/put-catalog-id.html             | user       |
++                                  +--------+--------------------------------------------------------------------------+------------+
+|                                  | DELETE | https://docs.dremio.com/rest-api/catalog/delete-catalog-id.html          | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/{id}/refresh            | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-id-refresh.html    | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/{id}/metadata/refresh   | POST   | Refresh of physical dataset metadata                                     | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/by-path/{path}          | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog-path.html           | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/search                  | GET    | Item research given a query string                                       | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/{id}/collaboration/tag  | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog-collaboration.html  | user       |
++                                  +--------+--------------------------------------------------------------------------+------------+
+|                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-collaboration.html | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+| /catalog/{id}/collaboration/wiki | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog-collaboration.html  | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+|                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-collaboration.html | user       |
++----------------------------------+--------+--------------------------------------------------------------------------+------------+
+
+**Reflection API**:
+
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+| Path                                    | Method | Docs                                                                | Permission |
++=========================================+========+=====================================================================+============+
+| /reflection                             | POST   | https://docs.dremio.com/rest-api/reflections/post-reflection.html   | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+| /reflection/{id}                        | GET    | https://docs.dremio.com/rest-api/reflections/get-reflection-id.html | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+|                                         | PUT    | https://docs.dremio.com/rest-api/reflections/put-reflection.html    | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+|                                         | DELETE | https://docs.dremio.com/rest-api/reflections/delete-reflection.html | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+| /dataset/{id}/reflection                | GET    | Reflections used on a dataset                                       | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+| /dataset/{id}/reflection/recommendation | POST   | Reflections recommended for a dataset                               | user       |
++-----------------------------------------+--------+---------------------------------------------------------------------+------------+
+
+**Job API**:
+
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+| Path                                       | Method | Docs                                                | Permission |
++============================================+========+=====================================================+============+
+| /job/{id}                                  | GET    | https://docs.dremio.com/rest-api/jobs/get-job.html  | user       |
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+| /job/{id}/results                          | GET    | https://docs.dremio.com/rest-api/jobs/get-job.html  | user       |
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+| /job/{id}/cancel                           | POST   | https://docs.dremio.com/rest-api/jobs/post-job.html | user       |
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+| /job/{id}/reflection/{reflectionId}        | GET    | Retrieval of a reflection job status                | user       |
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+| /job/{id}/reflection/{reflectionId}/cancel | POST   | Cancellation of a running reflection job            | user       |
++--------------------------------------------+--------+-----------------------------------------------------+------------+
+
+**SQL API**:
+
++------+--------+----------------------------------------------------+------------+
+| Path | Method | Docs                                               | Permission |
++======+========+====================================================+============+
+| /sql | POST   | https://docs.dremio.com/rest-api/sql/post-sql.html | user       |
++------+--------+----------------------------------------------------+------------+
+
+**User API**:
+
++----------------------+--------+-----------------------------------------------------+------------+
+| Path                 | Method | Docs                                                | Permission |
++======================+========+=====================================================+============+
+| /user                | POST   | User creation                                       | admin      |
++----------------------+--------+-----------------------------------------------------+------------+
+| /user/{id}           | GET    | https://docs.dremio.com/rest-api/user/get-user.html | user       |
++----------------------+--------+-----------------------------------------------------+------------+
+|                      | PUT    | User update                                         | user       |
++----------------------+--------+-----------------------------------------------------+------------+
+| /user/by-name/{name} | GET    | https://docs.dremio.com/rest-api/user/get-user.html | user       |
++----------------------+--------+-----------------------------------------------------+------------+
+
+**Cluster Statistics API**:
+
++----------------+--------+-------------------------------------------+------------+
+| Path           | Method | Docs                                      | Permission |
++================+========+===========================================+============+
+| /cluster/stats | GET    | Stats about sources, jobs and reflections | **admin**  |
++----------------+--------+-------------------------------------------+------------+
+
+**Job Statistics API**:
+
++-------------------+--------+-------------------------------------------------------+------------+
+| Path              | Method | Docs                                                  | Permission |
++===================+========+=======================================================+============+
+| /cluster/jobstats | GET    | Stats about the number of jobs per type over ten days | **admin**  |
++-------------------+--------+-------------------------------------------------------+------------+
+
+**User Statistics API**:
+
++-------------+--------+---------------------------+------------+
+| Path        | Method | Docs                      | Permission |
++=============+========+===========================+============+
+| /stats/user | GET    | Stats about user activity | **admin**  |
++-------------+--------+---------------------------+------------+
+
+**Info API**:
+
++-------+--------+--------------------------------+------------+
+| Path  | Method | Docs                           | Permission |
++=======+========+================================+============+
+| /info | GET    | Basic information about Dremio | user       |
++-------+--------+--------------------------------+------------+
+
+**Source API** (deprecated in favour of Catalog API, will be removed):
+
++---------------------+--------+-------------------------------------------------------------+------------+
+| Path                | Method | Docs                                                        | Permission |
++=====================+========+=============================================================+============+
+| /source             | GET    | https://docs.dremio.com/rest-api/sources/get-source.html    | user       |
++                     +--------+-------------------------------------------------------------+------------+
+|                     | POST   | https://docs.dremio.com/rest-api/sources/post-source.html   | **user**   |
++---------------------+--------+-------------------------------------------------------------+------------+
+| /source/{id}        | GET    | https://docs.dremio.com/rest-api/sources/get-source.html    | user       |
++                     +--------+-------------------------------------------------------------+------------+
+|                     | PUT    | https://docs.dremio.com/rest-api/sources/put-source.html    | **user**   |
++                     +--------+-------------------------------------------------------------+------------+
+|                     | DELETE | https://docs.dremio.com/rest-api/sources/delete-source.html | **user**   |
++---------------------+--------+-------------------------------------------------------------+------------+
+| /source/type        | GET    | https://docs.dremio.com/rest-api/sources/source-types.html  | **user**   |
++---------------------+--------+-------------------------------------------------------------+------------+
+| /source/type/{name} | GET    | https://docs.dremio.com/rest-api/sources/source-types.html  | **user**   |
++---------------------+--------+-------------------------------------------------------------+------------+
