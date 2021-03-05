@@ -239,4 +239,4 @@ Configuration using docker
 | APIM_MYSQL_PASS     |  ``wso2carbon``          |  MySQL db password                                                |
 +---------------------+--------------------------+-------------------------------------------------------------------+
 
-
+Keep in mind that, if you need to restart the container, you should *remove* it via ``docker rm -f container_name_or_id`` and then run it again. Stopping and restarting the container without removing it will result in an error.
