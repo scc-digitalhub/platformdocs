@@ -209,7 +209,7 @@ Open your ``dremio.conf`` file and add the following configuration:
     }
 
 The ``tenantField`` property matches the claim defined in the function above, which holds the user tenant selected during 
-the login. Dremio will associate it to the username with the syntax `<username>@<tenant>`. That will be used as username in Dremio.
+the login. Dremio will associate it to the username with the syntax ``<username>@<tenant>``. That will be used as username in Dremio.
 
 Additionally, to fully disable dremio.com intercom, add also:
 
