@@ -149,35 +149,38 @@ Under "Roles & Claims", set:
 
         if (claims.hasOwnProperty("roles") && claims.hasOwnProperty("space")) {
             var space = claims['space'];
-            //for debug with no space selection performed
+            //can't support no space selection performed
             if (Array.isArray(claims['space'])) {
-                space = claims['space'][0];
+                space = null;
             }
-
             //lookup for policy for selected space
             var tenant = null;
-            for (ri in claims['roles']) {
-                var role = claims['roles'][ri];
-                if (role.startsWith(prefix + space + ":")) {
-                    var p = role.split(":")[1]
+            if(space !== null) {
+                for (ri in claims['roles']) {
+                    var role = claims['roles'][ri];
+                    if (role.startsWith(prefix + space + ":")) {
+                        var p = role.split(":")[1]
+                        
+                        //replace owner with USER
+                        if (owner.indexOf(p) !== -1) {
+                            p = "ROLE_USER"
+                        }
 
-                    //replace owner with USER
-                    if (owner.indexOf(p) !== -1) {
-                        p = "ROLE_USER"
-                    }
-
-                    if (valid.indexOf(p) !== -1) {
-                        tenant = space
-                        break;
+                        if (valid.indexOf(p) !== -1) {
+                            tenant = space
+                            break;
+                        }
                     }
                 }
             }
 
             if (tenant != null) {
+                tenant =  tenant.replace(/\./g,'_')
                 claims["dremio/tenant"] = tenant;
                 claims["dremio/username"] = claims['username']+'@'+tenant;
             } 
         }
+
         return claims;
     }
 
@@ -187,11 +190,11 @@ step on AAC, the user will be asked to select which tenant to use.
 
 2. Configuring Dremio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Open the file ``common/src/main/resources/dremio-reference.conf`` and update ``services.coordinator.web.auth`` as follows:
+Open your ``dremio.conf`` file and add the following configuration:
 
 .. code-block:: javascript
 
-    auth: {
+    services.coordinator.web.auth: {
         type: "oauth",
         oauth: {
             authorizationUrl: "<aac_url>/eauth/authorize"
@@ -200,20 +203,19 @@ Open the file ``common/src/main/resources/dremio-reference.conf`` and update ``s
             callbackUrl: "<dremio_url>"
             clientId: "<your_client_id>"
             clientSecret: "<your_client_secret>"
-            tenantField: "dremio/username"
+            tenantField: "dremio/tenant"
             scope: "openid profile email user.roles.me"
         }
     }
 
-The ``tenantField`` property matches the claim defined in the function above, which holds both the username and the user tenant 
-with the syntax ``<username>@<tenant>``. If this property is used to specify which user info field stores such information, 
-that will be used as username in Dremio, otherwise the regular username will be used.
+The ``tenantField`` property matches the claim defined in the function above, which holds the user tenant selected during 
+the login. Dremio will associate it to the username with the syntax `<username>@<tenant>`. That will be used as username in Dremio.
 
-Additionally, to fully disable dremio.com intercom, update ``services.coordinator.web.ui`` as follows:
+Additionally, to fully disable dremio.com intercom, add also:
 
 .. code-block:: javascript
 
-    ui {
+    services.coordinator.web.ui {
         intercom: {
             enabled: false
             appid:  ""
@@ -258,6 +260,22 @@ The resulting archive can be installed as per upstream instructions.
     The first time you open Dremio, you will be asked to create an administrator account. 
     The admin user **must** have the username ``dremio``, as that is currently the only user that can have admin privileges.
 
+Additional changes in the fork
+------------------------------------------
+
+Sample Sources
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sample sources are currently not supported by the multitenancy model implemented so far, as they are named automatically 
+and thus cannot be prefixed manually with the appropriate tenant.
+
+Source Management
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Differently from the original implementation, in which source management was restricted to admins only, 
+non-admin users are allowed to manage (create, update and delete) sources in addition to spaces within their tenant. 
+In the UI this privilege is optional and disabled by default ("edit" and "delete" buttons are not displayed in the menus), 
+but it can be enabled in the admin console: navigate to **Admin > Cluster > Support > Support Keys**, enter ``ui.space.allow-manage`` 
+key and enable it (see https://docs.dremio.com/advanced-administration/support-settings/#support-keys for details).
+
 Dremio APIs
 ------------------------------------------
 Many features of Dremio are available via the Dremio REST API. Two versions of the API currently coexist:
@@ -265,7 +283,7 @@ Many features of Dremio are available via the Dremio REST API. Two versions of t
 - v2 is still used internally, although it should be dismissed in the future
 - v3 is documented on the Dremio docs as the official REST API and is progressively replacing v2 also internally
 
-Here is a collection of all the **v3 endpoints** with the links to the corresponding Dremio docs pages, if any. Note that 
+Here is a collection of all the **v3 endpoints** with links to the corresponding Dremio docs pages, if any. Note that 
 access to some APIs has been restricted to admin users in the fork, while regular users have been granted access 
 to source management APIs. The required permission is marked in **bold** in the tables whenever it differs from 
 the official documentation.
@@ -302,7 +320,7 @@ The API path is ``<dremio_url>/api/v3``.
 |                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-collaboration.html | user       |
 +----------------------------------+--------+--------------------------------------------------------------------------+------------+
 | /catalog/{id}/collaboration/wiki | GET    | https://docs.dremio.com/rest-api/catalog/get-catalog-collaboration.html  | user       |
-+----------------------------------+--------+--------------------------------------------------------------------------+------------+
++                                  +--------+--------------------------------------------------------------------------+------------+
 |                                  | POST   | https://docs.dremio.com/rest-api/catalog/post-catalog-collaboration.html | user       |
 +----------------------------------+--------+--------------------------------------------------------------------------+------------+
 
@@ -314,9 +332,9 @@ The API path is ``<dremio_url>/api/v3``.
 | /reflection                             | POST   | https://docs.dremio.com/rest-api/reflections/post-reflection.html   | user       |
 +-----------------------------------------+--------+---------------------------------------------------------------------+------------+
 | /reflection/{id}                        | GET    | https://docs.dremio.com/rest-api/reflections/get-reflection-id.html | user       |
-+-----------------------------------------+--------+---------------------------------------------------------------------+------------+
++                                         +--------+---------------------------------------------------------------------+------------+
 |                                         | PUT    | https://docs.dremio.com/rest-api/reflections/put-reflection.html    | user       |
-+-----------------------------------------+--------+---------------------------------------------------------------------+------------+
++                                         +--------+---------------------------------------------------------------------+------------+
 |                                         | DELETE | https://docs.dremio.com/rest-api/reflections/delete-reflection.html | user       |
 +-----------------------------------------+--------+---------------------------------------------------------------------+------------+
 | /dataset/{id}/reflection                | GET    | Reflections used on a dataset                                       | user       |
@@ -356,7 +374,7 @@ The API path is ``<dremio_url>/api/v3``.
 | /user                | POST   | User creation                                       | admin      |
 +----------------------+--------+-----------------------------------------------------+------------+
 | /user/{id}           | GET    | https://docs.dremio.com/rest-api/user/get-user.html | user       |
-+----------------------+--------+-----------------------------------------------------+------------+
++                      +--------+-----------------------------------------------------+------------+
 |                      | PUT    | User update                                         | user       |
 +----------------------+--------+-----------------------------------------------------+------------+
 | /user/by-name/{name} | GET    | https://docs.dremio.com/rest-api/user/get-user.html | user       |
