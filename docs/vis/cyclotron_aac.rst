@@ -136,6 +136,7 @@ dashboards without a proper role. A dashboard is private if the ability to **vie
 to specific users or *groups*.
 
 Cyclotron supports two different roles:
+
 - ``viewers``
 - ``editors``
 
