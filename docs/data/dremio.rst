@@ -9,7 +9,7 @@ The official website is https://www.dremio.com.
 
 The official documentation with details on how to use Dremio is https://docs.dremio.com/.
 
-Data sources
+Data Sources
 ------------------------------------------
 Dremio supports modern data lakes built on a variety of different systems and provides:
 
@@ -17,7 +17,7 @@ Dremio supports modern data lakes built on a variety of different systems and pr
 - NoSQL integration for modern datastores as MongoDB, Elasticsearch
 - support for file based datasources, cloud storage systems, NAS
 
-Data exploration
+Data Exploration
 ------------------------------------------
 Dremio offers a unified view across all datasets connected to the platform, with:
 
@@ -25,12 +25,12 @@ Dremio offers a unified view across all datasets connected to the platform, with
 - optimized query pushdown for all sources in native query language
 - virtual datasets based on complex queries available as sources for analytics and external tools
 
-Cloud ready
+Cloud Ready
 ------------------------------------------
 Dremio is architected for cloud environments, with elastic computing abilities and dynamic horizontal scaling. 
 Data reflections can be stored into distributed storage platforms such as *S3*, *HDFS*, *ADLS*.
 
-Screenshots from the website
+Screenshots from the Website
 ------------------------------------------
 
 .. image:: ../assets/dremio/dremio_9.png
@@ -69,7 +69,7 @@ Executors       4 CPU/16GB RAM minimum
 
 You can read more at https://docs.dremio.com/deployment/rpm-tarball-install.html.
 
-Platform fork
+Platform Fork
 ------------------------------------------
 The integration of Dremio into the Digital Hub platform required extending the open source version, 
 which lacks some enteprise features, to support:
@@ -115,8 +115,8 @@ The admin user can access any resource. Regular users can only access resources 
 This implies that users can only query data and access job results according to these constraints.
 
 .. note::
-    Currently, when you create a new source or space, you must **manually prefix its name with the tenant** 
-    you want it to belong to. Non-admin users cannot create sources or spaces with a different tenant than their own.
+    Currently, when non-admin users create a new source or space (sample sources included), that is **automatically prefixed** with their own tenant. 
+    Non-admin users cannot create sources or spaces with a different tenant than their own.
 
 Configuration for OAuth2.0
 ------------------------------------------
@@ -222,7 +222,7 @@ Additionally, to fully disable dremio.com intercom, add also:
         }
     }
 
-Building from source
+Building from Source
 ------------------------------------------
 Dremio is a *maven* project, and as such can be properly compiled, along with all the dependencies, via the usual ``mvn`` commands:
 
@@ -260,13 +260,8 @@ The resulting archive can be installed as per upstream instructions.
     The first time you open Dremio, you will be asked to create an administrator account. 
     The admin user **must** have the username ``dremio``, as that is currently the only user that can have admin privileges.
 
-Additional changes in the fork
+Additional Changes in the Fork
 ------------------------------------------
-
-Sample Sources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Sample sources are currently not supported by the multitenancy model implemented so far, as they are named automatically 
-and thus cannot be prefixed manually with the appropriate tenant.
 
 Source Management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -275,6 +270,33 @@ non-admin users are allowed to manage (create, update and delete) sources in add
 In the UI this privilege is optional and disabled by default ("edit" and "delete" buttons are not displayed in the menus), 
 but it can be enabled in the admin console: navigate to **Admin > Cluster > Support > Support Keys**, enter ``ui.space.allow-manage`` 
 key and enable it (see https://docs.dremio.com/advanced-administration/support-settings/#support-keys for details).
+
+Arrow Flight and ODBC/JDBC Services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While internal users can use their credentials to connect to Dremio Arrow Flight server endpoint and ODBC and JDBC services, 
+users that log in via OAuth need to set an internal password in order to connect to Dremio with some client. 
+Such password can be set in the Dremio UI on the Account Settings page.
+
+Connecting WSO2 DSS to Dremio via JDBC
+------------------------------------------
+The fork includes an `OSGi bundle <https://github.com/scc-digitalhub/dremio-oss/tree/multitenancy/bundle>`_ for Dremio JDBC Driver 
+that can be used with WSO2 Data Services Server. In order to use it, copy the JAR file to <DSS_PRODUCT_HOME>/repository/components/dropins 
+and restart DSS.
+
+DSS Datasource Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+A DSS data source can be connected to Dremio by configuring the following properties:
+
+- Datasource Type: ``RDBMS``
+- Database Engine: ``Generic``
+- Driver Class: ``com.dremio.jdbc.Driver``
+- URL: ``jdbc:dremio:direct=localhost:31010``
+- User Name: ``<dremio_username>``
+- Password: ``<dremio_password>``
+
+When you create a datasource that connects to Dremio, you will likely get a warning on the DSS console that a default logger 
+will be used for the driver logs.
 
 Dremio APIs
 ------------------------------------------
