@@ -213,7 +213,7 @@ Open your ``dremio.conf`` file and add the following configuration:
 The ``tenantField`` property matches the claim defined in the function above, which holds the user tenant selected during 
 the login. Dremio will associate it to the username with the syntax ``<username>@<tenant>``. That will be used as username in Dremio.
 
-The `roleField` property matches another claim defined in the function, which holds the role of the user (either "user" or "admin") 
+The ``roleField`` property matches another claim defined in the function, which holds the role of the user (either "user" or "admin") 
 within the selected tenant. Such roles correspond to READ and WRITE privileges over tenant data.
 
 Additionally, to fully disable dremio.com intercom, add also:
