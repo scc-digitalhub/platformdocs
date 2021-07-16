@@ -129,35 +129,45 @@ Configuration for OAuth2.0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 On your AAC instance, create a new client app named ``dremio`` with the following properties:
 
-- redirect web server URLs: ``<dremio_url>/apiv2/oauth/callback``
-- grant types: ``Authorization Code``
-- enabled identity providers : ``internal``
-- enabled scopes: ``openid, profile, email, user.roles.me``
+- Identity providers : ``internal``
+- Redirect URIs: ``<dremio_url>/apiv2/oauth/callback``
+- Grant types: ``authorization_code``
+- Authentication methods: ``client_secret_basic, client_secret_post, none``
+- Token type: ``JWT``
+- Selected scopes: ``user.roles.me, user.spaces.me, openid, profile, email``
 
-Under "Roles & Claims", set:
+Under "Hooks & Claims", set:
 
-- unique role spaces: ``components/dremio``
-- role prefix filters: ``components/dremio``
-- custom claim mapping function:
+- Unique spaces prefix: ``components/dremio``
+- Custom claim mapping: ``enable``
+- Custom claim mapping function:
 
 .. code-block:: javascript
 
     function claimMapping(claims) {
         var valid = ['ROLE_USER'];
-        var owner = ['ROLE_OWNER']
+        var owner = ['ROLE_OWNER'];
         var prefix = "components/dremio/";
 
-        if (claims.hasOwnProperty("roles") && claims.hasOwnProperty("space")) {
-            var space = claims['space'];
+        //fetch username where we find it
+        var username = claims["username"];
+        if(!username) {
+            username = claims ["preferred_username"];
+        }
+        if(!username) {
+            username = claims ["email"];
+        }
+
+        if ("roles" in claims && "space" in claims) {
+            var space = claims["space"];
             //can't support no space selection performed
-            if (Array.isArray(claims['space'])) {
+            if (Array.isArray(space)) {
                 space = null;
             }
             //lookup for policy for selected space
             var tenant = null;
-            if(space !== null) {
-                for (ri in claims['roles']) {
-                    var role = claims['roles'][ri];
+            if(space) {
+                for (var role of claims["roles"]) {
                     if (role.startsWith(prefix + space + ":")) {
                         var p = role.split(":")[1]
                         
@@ -174,10 +184,10 @@ Under "Roles & Claims", set:
                 }
             }
 
-            if (tenant != null) {
-                tenant =  tenant.replace(/\./g,'_')
+            if (tenant) {
+                tenant = tenant.replace(/\./g,'_');
                 claims["dremio/tenant"] = tenant;
-                claims["dremio/username"] = claims['username']+'@'+tenant;
+                claims["dremio/username"] = username+'@'+tenant;
                 claims["dremio/role"] = "admin";
             } 
         }
@@ -205,7 +215,7 @@ Open your ``dremio.conf`` file and add the following configuration:
             clientId: "<your_client_id>"
             clientSecret: "<your_client_secret>"
             tenantField: "dremio/tenant"
-            scope: "openid profile email user.roles.me"
+            scope: "openid profile email user.roles.me user.spaces.me"
             roleField: "dremio/role"
         }
     }
