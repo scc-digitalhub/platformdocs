@@ -158,7 +158,7 @@ Under "Hooks & Claims", set:
             username = claims ["email"];
         }
 
-        if ("roles" in claims && "space" in claims) {
+        if ("spaceRoles" in claims && "space" in claims) {
             var space = claims["space"];
             //can't support no space selection performed
             if (Array.isArray(space)) {
@@ -167,7 +167,7 @@ Under "Hooks & Claims", set:
             //lookup for policy for selected space
             var tenant = null;
             if(space) {
-                for (var role of claims["roles"]) {
+                for (var role of claims["spaceRoles"]) {
                     if (role.startsWith(prefix + space + ":")) {
                         var p = role.split(":")[1]
                         
@@ -196,8 +196,7 @@ Under "Hooks & Claims", set:
     }
 
 This function adds a custom claim holding a single user tenant, as AAC supports users being associated to multiple tenants 
-while Dremio does not (see https://github.com/scc-digitalhub/AAC#53-services-scopes-and-claims). During the authorization 
-step on AAC, the user will be asked to select which tenant to use.
+while Dremio does not. During the authorization step on AAC, the user will be asked to select which tenant to use.
 
 2. Configuring Dremio
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -208,15 +207,18 @@ Open your ``dremio.conf`` file and add the following configuration:
     services.coordinator.web.auth: {
         type: "oauth",
         oauth: {
-            authorizationUrl: "<aac_url>/eauth/authorize"
+            authorizationUrl: "<aac_url>/oauth/authorize"
             tokenUrl: "<aac_url>/oauth/token"
             userInfoUrl: "<aac_url>/userinfo"
             callbackUrl: "<dremio_url>"
+            jwksUrl: "<aac_url>/jwk"
             clientId: "<your_client_id>"
             clientSecret: "<your_client_secret>"
             tenantField: "dremio/tenant"
             scope: "openid profile email user.roles.me user.spaces.me"
             roleField: "dremio/role"
+            jwtIssuer: "<expected_token_issuer>"
+            jwtAudience: "<expected_token_audience>"
         }
     }
 
